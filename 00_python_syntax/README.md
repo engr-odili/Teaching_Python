@@ -2,7 +2,10 @@
 ---
 Welcome to your first lesson.
 *Basic syntas* is the grammar of Python. It is how you write code so Python can
-understand it. If you break syntax rules, Python raises a `SyntaxError.`
+understand it. Just as English has rules for capitalization, punctuation, and
+sentence structure so that humans can understand each other, Python has syntax
+rules so that the computer can unserstand your instructions.
+If you break syntax rules, Python raises a `SyntaxError.`
 
 I'll explain everything from zero, and every example that uses variables or
 functions will include *type hints.*
@@ -333,6 +336,7 @@ print("Eat something")
 ```
 
 ##12. Test / Exercise for python syntax
+*Exercise 1*
 Write a python program that:
 1. Asks the user for their name.
 2. Asks the user for their birth year.
@@ -348,6 +352,16 @@ What is your name? Chinedum
 What year where you born? 2006
 Hello, Chinedum! You are about 20 years old in 2026
 ```
+*Exercise 2*
+1. Create a function called `create_profile` that returns nothing
+2. Inside the function, add a docstring explaining what it does.
+3. Create three variables with *strict type hints*:
+- A string for a `city`
+- An integer for a `zip_code`
+- A boolean for `is_coastal`
+4. Use `print()` and an *f-string* to output a sentence combining all three
+   variables.
+5. Call the function outside of the function block (un-indented).
 
 ##13. Quiz answers
 1. Missing colon after `if age > 18:`.

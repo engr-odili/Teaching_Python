@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test / Exercise for python syntax
+Test / Exercise 1 for python syntax
 """
 # Type hints are used for code specificity
 
