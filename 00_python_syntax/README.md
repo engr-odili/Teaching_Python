@@ -1,4 +1,4 @@
-# PYTHON BASIC SYNTAX
+# 000 PYTHON BASIC SYNTAX
 ---
 Welcome to your first lesson.
 *Basic syntas* is the grammar of Python. It is how you write code so Python can
