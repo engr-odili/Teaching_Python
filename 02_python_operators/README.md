@@ -527,3 +527,113 @@ Contains 'a': True
 13. `-6` - bitwise NOT.
 14. Python 3 does not allow ordering comparisons between `str` and `int`.
 15. `14` - multiplication before addition.
+
+#BONUS ADVANCED TOPIC
+##THE PYTHON `@` (Matrix Multiplication) Operator
+This is a fascinating topic. The `@` symbol in Python has *two completely
+differnt meanings* depending on where it appears:
+1. As a *decorator* - `@my_decorator` on its own line above a function
+2. As the *matrix multiplication operator* - `a @ b` between two value.
+
+We are covering meaning #2 here. Meaning #1(decorators) is a separate advanced
+topic we will do later. Do not confuse them.
+
+Every example uses *type hints*, explained as we go.
+
+##1. What is the matrix multiplication operator?
+The `@` operator performs *matrix multiplication* (also called the matrix
+product). It was added in Python 3.5 (PEP 465) specifically because the `*`
+opertor was already used for element-wise multiplication in libraries like
+NumPy, and mathematicians neede a distinct symbol.
+```python
+result: Matrix = a @ b          # matrix multiplication
+result2: Matrix = a * b         # element-wise multiplication (in Numpy)
+```
+Mathematically, if `A` is an `m x x` matrix and `B` is an `n x p` matrix, then
+`A @ B` produces an `m x p` matrix.
+
+##2. Why does`@` exist?
+Before Python 3.5, if you wanted matrix multiplication in Numpy, you had to
+write:
+```python
+result = np.dot(a, b)
+
+# or
+
+result = a.dot(b)
+```
+This was ugly and did not read like math. The `*` operator was already taken for
+element-wise multiplication. So Python introduced `@` as a dedicated operator
+for matrix multiplication.
+
+Why it matters:
+- Readability: `C = A @ B` looks like linear algebra.
+- Consistency: libraries can implement it uniformly.
+- Customisation: you can define `@` for your own class.
+
+Where it is used:
+- NumPy, PyTouch, TensorFlow, JAX - machine learning and scientific computing.
+- Linear algebra libraries.
+- Custom matrix/vector classes.
+
+When to use it:
+- When working with matrices or vectors that support it.
+- Almost never in Python lists - it will raise `TypeError`.
+
+##3. The `@` operator does not work on built-in lists
+This surprises beginners. The `@` operator is *not* built into Python's core
+types.
+```python
+a: list[int] = [1, 2, 3]
+b: list[int] = [4, 5, 6]
+# result = a @ b    # TypeError: unsupported oerand type(s) for @: 'list' and
+'list'
+```
+You must use a library like NumPy, or implement `__matmul__` yourself.
+
+##4. How `@` works: the dunder methods
+when Python sees `a @ b`, it looks for the method `__matmul__` on `a`'s calass.
+If not fount, it tries `__rmatmul__` on `b`. For `a @= b`, it tires `__imatmul__`.
+
+| Operator | Method | Called on |
+|----------|--------|-----------|
+| `a @ b` | `__matmul__(self, other)` | type of `a` |
+| `a @ b` (fallback) | `__rmatmul__(self, other)` | type of `b` |
+| `a @ b` | `__imatmul__(self, other)` | type of `a` |
+
+These are *dunder methods* (double underscore). We will cover them deeply later,
+but here is the idea: Python translates operators into methods calls.
+Example: `a + b` becomes `a.__add__(b)`.
+so `a @ b` becomes `a.__matmul__(b)`.
+
+##5. Using `@` with NumPy (the most common real use)
+NumPy is the standard library for numerical computing. Install it first:
+```bash
+pip install numpy
+```
+Then:
+```python
+import numpy as np
+from numpy.typing import NDArray
+
+# 2x2 matrices
+A: NDArray[np.float64] = np.array([[1, 2], [3, 4]], dtype=np.flaot64)
+B: NDArray[np.float64] = np.array([[5, 6], [7, 8]], dtype=np.flaot64)
+
+C: NDArray[np.float64] = A @ B
+print(C)
+# [[19 22]
+#  [43 50]]
+```
+
+Compare with element-wise `*`:
+```python
+element_wise: NDArray[np.float64] = A * B
+print(element_wise)
+
+# [[5 12]
+#  [21 32]]
+```
+They are completely different operations.
+This is exactly why `@` was introduced.
+
